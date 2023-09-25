@@ -1,7 +1,6 @@
 package uz.bookshop.auth;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,7 +11,6 @@ import uz.bookshop.entity.enums.Role;
 import uz.bookshop.repository.UserRepository;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -28,13 +26,11 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         Role role;
-        if (request.getRole().equals(Role.USER)) role = Role.USER;
-        else role = Role.AUTHOR;
         var user = Users.builder()
                 .name(request.getName())
                 .login(request.getLogin())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(role)
+                .role(Role.USER)
                 .createdAt(new Date(System.currentTimeMillis()))
                 .build();
         repository.save(user);
