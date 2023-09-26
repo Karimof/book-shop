@@ -25,4 +25,6 @@ public class Books {
 
     private long viewCount;
 
+    private String image;
+
 }
