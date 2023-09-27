@@ -19,7 +19,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/price")
+    @PostMapping("/users")
     public ResponseEntity<Users> createUsers(@RequestBody Users users) {
         Users result = userService.save(users);
         return ResponseEntity.ok(result);

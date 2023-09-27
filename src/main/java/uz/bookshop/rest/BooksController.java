@@ -18,11 +18,6 @@ public class BooksController {
         this.booksService = booksService;
     }
 
-//    @GetMapping
-//    public ResponseEntity<String> sayHello(){
-//        return ResponseEntity.ok("Hello from secured endpoint");
-//    }
-
     @PostMapping("/books")
     public ResponseEntity<Books> createBook(@RequestBody Books books) {
         Books result = booksService.save(books);
