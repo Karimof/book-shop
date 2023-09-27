@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import uz.bookshop.entity.Price;
 
 @Repository
-public interface PriceRepository extends JpaRepository<Price, Integer> {
+public interface PriceRepository extends JpaRepository<Price, Long> {
 }

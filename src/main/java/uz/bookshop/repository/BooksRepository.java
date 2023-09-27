@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import uz.bookshop.entity.Books;
 
 @Repository
-public interface BooksRepository extends JpaRepository<Books, Integer> {
+public interface BooksRepository extends JpaRepository<Books, Long> {
 }

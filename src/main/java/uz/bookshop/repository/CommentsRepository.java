@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import uz.bookshop.entity.Comments;
 
 @Repository
-public interface CommentsRepository extends JpaRepository<Comments, Integer> {
+public interface CommentsRepository extends JpaRepository<Comments, Long> {
 }
