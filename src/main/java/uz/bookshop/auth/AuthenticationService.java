@@ -25,7 +25,6 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        Role role;
         var user = Users.builder()
                 .name(request.getName())
                 .login(request.getLogin())
