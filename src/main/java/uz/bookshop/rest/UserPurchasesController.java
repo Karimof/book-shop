@@ -25,6 +25,12 @@ public class UserPurchasesController {
         return ResponseEntity.ok(result);
     }
 
+    @PostMapping("/userPurchases/buy")
+    public ResponseEntity<UsersPurchases> createUsersPurchase(@RequestBody Long bookId) {
+        UsersPurchases result = userPurchasesService.createByBookId(bookId);
+        return ResponseEntity.ok(result);
+    }
+
     @PutMapping("/userPurchases")
     public ResponseEntity<UsersPurchases> updateUsersPurchases(@RequestBody UsersPurchases userPurchases) {
         UsersPurchases result = userPurchasesService.update(userPurchases);

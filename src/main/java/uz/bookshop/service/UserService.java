@@ -1,5 +1,6 @@
 package uz.bookshop.service;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import uz.bookshop.entity.Users;
 import uz.bookshop.repository.UserRepository;
@@ -30,6 +31,10 @@ public class UserService {
 
     public Optional<Users> findOne(Long id) {
         return userRepository.findById(id);
+    }
+
+    public Users getCurrentUser() {
+        return (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     public void delete(Long id) {

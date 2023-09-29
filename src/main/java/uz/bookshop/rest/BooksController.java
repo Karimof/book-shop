@@ -1,8 +1,12 @@
 package uz.bookshop.rest;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.bookshop.entity.Books;
+import uz.bookshop.entity.dto.BooksDTO;
 import uz.bookshop.service.BooksService;
 
 import java.util.List;
@@ -36,10 +40,37 @@ public class BooksController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("/books-price")
+    public ResponseEntity<List<BooksDTO>> getAllBooksDTO() {
+        List<BooksDTO> result = booksService.findAllBooksWithPrice();
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/books-price/{id}")
+    public ResponseEntity<BooksDTO> getBooksDTO(@PathVariable Long id) {
+        BooksDTO result = booksService.findBooksWithPrice(id);
+        return ResponseEntity.ok(result);
+    }
+
     @GetMapping("/books/{id}")
     public ResponseEntity<Books> getBook(@PathVariable Long id) {
         Optional<Books> result = booksService.findOne(id);
         return ResponseEntity.ok(result.orElse(null));
+    }
+
+    @GetMapping("/books/count/{id}")
+    public ResponseEntity<Books> increaseViewCount(@PathVariable Long id) {
+        booksService.increaseViewCount(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/books/image/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
+        ByteArrayResource bookImage = booksService.getBookImage(imageName);
+        if (bookImage == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(bookImage);
     }
 
     @DeleteMapping("/books/{id}")
