@@ -8,7 +8,7 @@ import java.sql.Date;
 
 @Data
 @AllArgsConstructor
-public class BooksDTO {
+public class BooksVM {
 
     private long id;
 

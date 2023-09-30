@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.bookshop.entity.Books;
-import uz.bookshop.entity.dto.BooksDTO;
+import uz.bookshop.entity.dto.BooksVM;
 import uz.bookshop.service.BooksService;
 
 import java.util.List;
@@ -41,14 +41,14 @@ public class BooksController {
     }
 
     @GetMapping("/books-price")
-    public ResponseEntity<List<BooksDTO>> getAllBooksDTO() {
-        List<BooksDTO> result = booksService.findAllBooksWithPrice();
+    public ResponseEntity<List<BooksVM>> getAllBooksDTO() {
+        List<BooksVM> result = booksService.findAllBooksWithPrice();
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/books-price/{id}")
-    public ResponseEntity<BooksDTO> getBooksDTO(@PathVariable Long id) {
-        BooksDTO result = booksService.findBooksWithPrice(id);
+    public ResponseEntity<BooksVM> getBooksDTO(@PathVariable Long id) {
+        BooksVM result = booksService.findBooksWithPrice(id);
         return ResponseEntity.ok(result);
     }
 

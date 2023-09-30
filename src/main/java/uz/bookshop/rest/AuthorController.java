@@ -19,25 +19,25 @@ public class AuthorController {
     }
 
     @PostMapping("/author")
-    public ResponseEntity<Author> createBook(@RequestBody Author author) {
+    public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
         Author result = authorService.save(author);
         return ResponseEntity.ok(result);
     }
 
     @PutMapping("/author")
-    public ResponseEntity<Author> updateBook(@RequestBody Author author) {
+    public ResponseEntity<Author> updateAuthor(@RequestBody Author author) {
         Author result = authorService.update(author);
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/author")
-    public ResponseEntity<List<Author>> getAllBooks() {
+    public ResponseEntity<List<Author>> getAllAuthors() {
         List<Author> result = authorService.findAll();
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/author/{id}")
-    public ResponseEntity<Author> getBook(@PathVariable Long id) {
+    public ResponseEntity<Author> getAuthor(@PathVariable Long id) {
         Optional<Author> result = authorService.findOne(id);
         return ResponseEntity.ok(result.orElse(null));
     }

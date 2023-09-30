@@ -6,22 +6,22 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uz.bookshop.entity.Books;
-import uz.bookshop.entity.dto.BooksDTO;
+import uz.bookshop.entity.dto.BooksVM;
 
 import java.util.List;
 
 @Repository
 public interface BooksRepository extends JpaRepository<Books, Long> {
-    @Query(value = "select new uz.bookshop.entity.dto.BooksDTO(b.id, b.name, b.author, b.createdAt, b.viewCount, b.image, p.price) from Price as p " +
+    @Query(value = "select new uz.bookshop.entity.dto.BooksVM(b.id, b.name, b.author, b.createdAt, b.viewCount, b.image, p.price) from Price as p " +
             "inner join Books as b " +
             "on p.books.id = b.id")
-    List<BooksDTO> findAllBooksWithPrice();
+    List<BooksVM> findAllBooksWithPrice();
 
-    @Query(value = "select new uz.bookshop.entity.dto.BooksDTO(b.id, b.name, b.author, b.createdAt, b.viewCount, b.image, p.price) from Price as p " +
+    @Query(value = "select new uz.bookshop.entity.dto.BooksVM(b.id, b.name, b.author, b.createdAt, b.viewCount, b.image, p.price) from Price as p " +
             "inner join Books as b " +
             "on p.books.id = b.id " +
             "where b.id = :id")
-    BooksDTO findBookWithPrice(Long id);
+    BooksVM findBookWithPrice(Long id);
 
     @Query(value = "select p.price from Price as p " +
             "inner join Books as b " +

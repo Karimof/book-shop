@@ -3,7 +3,7 @@ package uz.bookshop.service;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 import uz.bookshop.entity.Books;
-import uz.bookshop.entity.dto.BooksDTO;
+import uz.bookshop.entity.dto.BooksVM;
 import uz.bookshop.repository.BooksRepository;
 
 import java.io.IOException;
@@ -36,11 +36,11 @@ public class BooksService {
         return booksRepository.findAll();
     }
 
-    public List<BooksDTO> findAllBooksWithPrice() {
+    public List<BooksVM> findAllBooksWithPrice() {
         return booksRepository.findAllBooksWithPrice();
     }
 
-    public BooksDTO findBooksWithPrice(Long id) {
+    public BooksVM findBooksWithPrice(Long id) {
         return booksRepository.findBookWithPrice(id);
     }
 
@@ -52,7 +52,7 @@ public class BooksService {
         Path absolutePath = Paths.get(
                 "D:/Programming/Projects/Experience projects/book-shop/src/main/resources/image/"
                         + imageName);
-        ByteArrayResource inputStream = null;
+        ByteArrayResource inputStream;
         try {
             inputStream = new ByteArrayResource(Files.readAllBytes(absolutePath));
         } catch (IOException e) {
