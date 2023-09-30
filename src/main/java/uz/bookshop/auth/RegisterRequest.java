@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import uz.bookshop.entity.enums.Role;
 
 @Data
 @Builder
@@ -16,4 +17,6 @@ public class RegisterRequest {
     private String login;
 
     private String password;
+
+    private Role role;
 }

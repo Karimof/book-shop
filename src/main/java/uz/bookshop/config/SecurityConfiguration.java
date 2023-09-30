@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import uz.bookshop.entity.enums.Role;
 
 @Configuration
 @EnableWebSecurity
@@ -26,7 +27,8 @@ public class SecurityConfiguration {
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers("/api/v1/author/**").permitAll()
+                .requestMatchers("/api/v1/**").hasAuthority(Role.USER.name())
+                .requestMatchers("/api/v2/**").hasAuthority(Role.AUTHOR.name())
                 .anyRequest()
                 .authenticated()
                 .and()

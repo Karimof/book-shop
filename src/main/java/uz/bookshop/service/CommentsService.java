@@ -51,7 +51,6 @@ public class CommentsService {
     public List<Comments> create(CommentVM commentVM) {
         Books book = booksService.findOne(commentVM.getBookId()).orElseThrow();
         Users user = userService.getCurrentUser();
-
         Comments comment = new Comments();
         comment.setBooks(book);
         comment.setUsers(user);
