@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import uz.bookshop.entity.Books;
 import uz.bookshop.entity.Comments;
 import uz.bookshop.entity.Users;
-import uz.bookshop.entity.dto.CommentVM;
+import uz.bookshop.entity.VM.CommentVM;
 import uz.bookshop.repository.CommentsRepository;
 
 import java.sql.Date;

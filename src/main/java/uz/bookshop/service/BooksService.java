@@ -3,7 +3,7 @@ package uz.bookshop.service;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 import uz.bookshop.entity.Books;
-import uz.bookshop.entity.dto.BooksVM;
+import uz.bookshop.entity.VM.BooksVM;
 import uz.bookshop.repository.BooksRepository;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package uz.bookshop.entity.dto;
+package uz.bookshop.entity.VM;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

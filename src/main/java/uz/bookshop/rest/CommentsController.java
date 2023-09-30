@@ -3,7 +3,7 @@ package uz.bookshop.rest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.bookshop.entity.Comments;
-import uz.bookshop.entity.dto.CommentVM;
+import uz.bookshop.entity.VM.CommentVM;
 import uz.bookshop.service.CommentsService;
 
 import java.util.List;

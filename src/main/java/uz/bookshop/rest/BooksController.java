@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.bookshop.entity.Books;
-import uz.bookshop.entity.dto.BooksVM;
+import uz.bookshop.entity.VM.BooksVM;
 import uz.bookshop.service.BooksService;
 
 import java.util.List;
