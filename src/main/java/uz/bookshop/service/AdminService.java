@@ -6,18 +6,15 @@ import uz.bookshop.entity.Auth;
 import uz.bookshop.entity.Users;
 import uz.bookshop.repository.UserRepository;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class AdminService {
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public AdminService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -47,23 +44,5 @@ public class UserService {
 
     public void delete(Long id) {
         userRepository.deleteById(id);
-    }
-
-    //these for admin panel
-    public List<Users> weekUsers() {
-        LocalDate localDate = LocalDate.now().minusDays(7);
-        List<Users> users = userRepository.findAllByCreatedAtAfter(Date.valueOf(localDate));
-        return users;
-    }
-
-    public ArrayList<ArrayList<Integer>> usersMonth() {
-        ArrayList<ArrayList<Integer>> usersByMonth = userRepository.findAllByMonth();
-        return usersByMonth;
-    }
-
-    public List<Object> activeUsers() {
-        List<Object> activeUsers = userRepository.active();
-
-        return activeUsers;
     }
 }
