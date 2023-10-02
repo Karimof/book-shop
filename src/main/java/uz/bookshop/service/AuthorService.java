@@ -34,6 +34,10 @@ public class AuthorService {
         return authorRepository.findById(id);
     }
 
+    public Optional<Author> findByLogin(String login) {
+        return authorRepository.findByLogin(login);
+    }
+
     public void delete(Long id) {
         authorRepository.deleteById(id);
     }

@@ -7,6 +7,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import uz.bookshop.entity.Auth;
 
 import java.security.Key;
 import java.util.Date;
@@ -28,25 +29,26 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generatedToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(), userDetails);
+    public String generatedToken(Auth auth) {
+        return generateToken(new HashMap<>(), auth);
     }
 
     public String generateToken(
             Map<String, Object> extractClaims,
-            UserDetails userDetails
+            Auth auth
     ) {
+        extractClaims.put("role", auth.getRole().name());
         return Jwts
                 .builder()
                 .setClaims(extractClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(auth.getLogin())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 3600 * 24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails){
+    public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }

@@ -1,9 +1,13 @@
 package uz.bookshop.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
+import uz.bookshop.entity.Author;
 import uz.bookshop.entity.Books;
+import uz.bookshop.entity.Price;
 import uz.bookshop.entity.VM.BooksVM;
+import uz.bookshop.entity.VM.CreateBooksVM;
 import uz.bookshop.repository.BooksRepository;
 
 import java.io.IOException;
@@ -19,8 +23,17 @@ public class BooksService {
 
     private final BooksRepository booksRepository;
 
-    public BooksService(BooksRepository booksRepository) {
+    private final UserService userService;
+
+    private final AuthorService authorService;
+
+    private final PriceService priceService;
+
+    public BooksService(BooksRepository booksRepository, UserService userService, AuthorService authorService, PriceService priceService) {
         this.booksRepository = booksRepository;
+        this.userService = userService;
+        this.authorService = authorService;
+        this.priceService = priceService;
     }
 
     public Books save(Books books) {
@@ -42,6 +55,32 @@ public class BooksService {
 
     public BooksVM findBooksWithPrice(Long id) {
         return booksRepository.findBookWithPrice(id);
+    }
+
+    @Transactional
+    public Books createBookWithName(CreateBooksVM booksVM) {
+        Books books = new Books();
+        books.setName(booksVM.getName());
+        books.setViewCount(0);
+        books.setAuthor(getLoggedAuthor());
+        books.setCreatedAt(new Date(System.currentTimeMillis()));
+        Books savedBook = booksRepository.save(books);
+
+        Price price = new Price();
+        price.setBooks(savedBook);
+        price.setPrice(booksVM.getPrice());
+        priceService.save(price);
+
+        return savedBook;
+    }
+
+    public List<BooksVM> getAuthorBooks() {
+        return booksRepository.findAuthorsBooks(getLoggedAuthor().getId());
+    }
+
+    private Author getLoggedAuthor() {
+        String authorLogin = userService.getAuth().getUsername();
+        return authorService.findByLogin(authorLogin).orElseThrow();
     }
 
     public float getThePriceOfBook(Long bookId) {

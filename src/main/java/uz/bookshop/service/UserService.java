@@ -34,12 +34,12 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public Auth getAuth() {
-        return (Auth) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    }
-
     public Users getCurrentUser() {
         return userRepository.findByLogin(getAuth().getLogin()).orElseThrow();
+    }
+
+    public Auth getAuth() {
+        return (Auth) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     public void delete(Long id) {
