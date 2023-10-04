@@ -6,8 +6,7 @@ import org.springframework.stereotype.Service;
 import uz.bookshop.entity.Author;
 import uz.bookshop.entity.Books;
 import uz.bookshop.entity.Price;
-import uz.bookshop.entity.VM.BooksVM;
-import uz.bookshop.entity.VM.CreateBooksVM;
+import uz.bookshop.entity.VM.*;
 import uz.bookshop.repository.BooksRepository;
 
 import java.io.IOException;
@@ -15,6 +14,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,11 +50,19 @@ public class BooksService {
         return booksRepository.findAll();
     }
 
+    public Optional<Books> findOne(Long id) {
+        return booksRepository.findById(id);
+    }
+
+    public void delete(Long id) {
+        booksRepository.deleteById(id);
+    }
+
     public List<BooksVM> findAllBooksWithPrice() {
         return booksRepository.findAllBooksWithPrice();
     }
 
-    public BooksVM findBooksWithPrice(Long id) {
+    public BooksVM findBookWithPrice(Long id) {
         return booksRepository.findBookWithPrice(id);
     }
 
@@ -78,11 +87,6 @@ public class BooksService {
         return booksRepository.findAuthorsBooks(getLoggedAuthor().getId());
     }
 
-    private Author getLoggedAuthor() {
-        String authorLogin = userService.getAuth().getUsername();
-        return authorService.findByLogin(authorLogin).orElseThrow();
-    }
-
     public float getThePriceOfBook(Long bookId) {
         return booksRepository.findThePriceOfBook(bookId);
     }
@@ -104,11 +108,55 @@ public class BooksService {
         booksRepository.increaseBookViewCount(id);
     }
 
-    public Optional<Books> findOne(Long id) {
-        return booksRepository.findById(id);
+    public List<AuthorBooksCount> activeAuthors() {
+        return booksRepository.activeAuthors();
     }
 
-    public void delete(Long id) {
-        booksRepository.deleteById(id);
+    public List<FamousBooksClassVM> FamousBooks() {
+        List<FamousBooksClassVM> a = new ArrayList<>();
+
+        booksRepository.famousBooks().forEach(objects -> {
+            a.add(getConvertedData(objects));
+        });
+        a.sort(sortByFamously());
+
+        return a;
+    }
+
+    private FamousBooksClassVM getConvertedData(Object[] object) {
+        FamousBooksClassVM convertedData = new FamousBooksClassVM();
+
+        convertedData.setId((Long) object[0]);
+        convertedData.setName((String) object[1]);
+        if (object[2] != null) {
+            convertedData.setBuy((Long) object[2]);
+        }
+        if (object[3] != null) {
+            convertedData.setComment((Long) object[3]);
+            convertedData.setBuy((Long) object[2]);
+        }
+        convertedData.setView((Long) object[4]);
+        return convertedData;
+    }
+
+    private Comparator<FamousBooksClassVM> sortByFamously() {
+        return Comparator
+                .comparing(FamousBooksClassVM::getBuy)
+                .reversed()
+                .thenComparing(
+                        Comparator.comparing(FamousBooksClassVM::getComment)
+                                .reversed())
+                .thenComparing(
+                        Comparator.comparing(FamousBooksClassVM::getView)
+                                .reversed());
+    }
+
+    private Author getLoggedAuthor() {
+        String authorLogin = userService.getAuth().getUsername();
+        return authorService.findByLogin(authorLogin).orElseThrow();
+    }
+
+    public List<AuthorEarnedTotal> getEarnedMoreAuthors() {
+        return booksRepository.earnedMoreAuthor();
     }
 }

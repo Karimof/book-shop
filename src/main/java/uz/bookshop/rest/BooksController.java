@@ -48,7 +48,7 @@ public class BooksController {
 
     @GetMapping("/books-price/{id}")
     public ResponseEntity<BooksVM> getBooksDTO(@PathVariable Long id) {
-        BooksVM result = booksService.findBooksWithPrice(id);
+        BooksVM result = booksService.findBookWithPrice(id);
         return ResponseEntity.ok(result);
     }
 

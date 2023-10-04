@@ -62,8 +62,6 @@ public class UserService {
     }
 
     public List<Object> activeUsers() {
-        List<Object> activeUsers = userRepository.active();
-
-        return activeUsers;
+        return userRepository.active();
     }
 }

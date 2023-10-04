@@ -29,6 +29,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/api/v1/**").hasAuthority(Role.USER.name())
                 .requestMatchers("/api/v2/**").hasAuthority(Role.AUTHOR.name())
+                .requestMatchers("/api/admin/**").hasAuthority(Role.ADMIN.name())
                 .anyRequest()
                 .authenticated()
                 .and()

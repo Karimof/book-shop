@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uz.bookshop.entity.Users;
+import uz.bookshop.entity.VM.AuthorBooksCount;
+import uz.bookshop.entity.VM.AuthorEarnedTotal;
+import uz.bookshop.entity.VM.FamousBooksClassVM;
 import uz.bookshop.service.AuthorService;
 import uz.bookshop.service.BooksService;
 import uz.bookshop.service.UserService;
@@ -44,6 +47,24 @@ public class AdminController {
     @GetMapping("/active-users")
     public ResponseEntity<List<Object>> activeUsers() {
         List<Object> result = userService.activeUsers();
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/famous-books")
+    public ResponseEntity<List<FamousBooksClassVM>> mostBoughtBooks() {
+        List<FamousBooksClassVM> result = booksService.FamousBooks();
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/active-authors")
+    public ResponseEntity<List<AuthorBooksCount>> activeAuthors() {
+        List<AuthorBooksCount> result = booksService.activeAuthors();
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/earned-authors")
+    public ResponseEntity<List<AuthorEarnedTotal>> earnedMoreAuthors() {
+        List<AuthorEarnedTotal> result = booksService.getEarnedMoreAuthors();
         return ResponseEntity.ok(result);
     }
 }
